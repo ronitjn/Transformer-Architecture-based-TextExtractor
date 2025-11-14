@@ -1,6 +1,6 @@
-# PDF Text Extractor
+# PDF Text Extractor & Transformer Language Model
 
-A simple and efficient tool to extract text from PDF files for dataset creation and model training.
+A fast, efficient tool for PDF text extraction and Transformer-based language model training using **UV** for package management.
 
 ## Features
 
@@ -9,26 +9,61 @@ A simple and efficient tool to extract text from PDF files for dataset creation 
 - 💾 Save output as `.txt` or `.json` with metadata
 - 🔄 Support for multiple PDF libraries (PyMuPDF, pdfplumber)
 - 📊 Page-by-page extraction with character counts
+- 🤖 Transformer model based on "Attention Is All You Need"
+- ⚡ **10-100x faster** dependency installation with UV
 
-## Installation
+## Prerequisites
 
-1. Install required dependencies:
+### Install UV (Fast Package Manager)
+
+**Windows:**
+```bash
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**macOS/Linux:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Verify: `uv --version`
+
+## Quick Setup
 
 ```bash
-pip install -r requirements.txt
+# Clone the repository
+git clone https://github.com/ronitjn/Transformer-Architecture-based-TextExtractor.git
+cd Transformer-Architecture-based-TextExtractor
+
+# Create virtual environment
+uv venv
+
+# Activate virtual environment
+source .venv/Scripts/activate  # Windows (bash)
+# OR
+source .venv/bin/activate  # macOS/Linux
+
+# Install dependencies (CPU)
+uv pip install -e .
+
+# OR Install with GPU support (CUDA 12.4)
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+uv pip install -e .
 ```
+
+See [UV Setup Guide](README_UV_SETUP.md) for detailed instructions.
 
 ## Usage
 
-### Command Line
+### Extract Text from PDF
 
 ```bash
-python pdf_text_extractor.py <path_to_your_pdf>
+uv run python pdf_text_extractor.py <path_to_your_pdf>
 ```
 
 **Example:**
 ```bash
-python pdf_text_extractor.py research_paper.pdf
+uv run python pdf_text_extractor.py research_paper.pdf
 ```
 
 This will generate:

@@ -7,7 +7,12 @@ __pycache__/
 env/
 venv/
 ENV/
+.venv/
 .venv
+
+# UV
+uv.lock
+.python-version
 
 # Extracted files
 *_extracted.txt

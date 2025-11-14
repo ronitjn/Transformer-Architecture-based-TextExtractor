@@ -10,35 +10,59 @@ nvidia-smi
 
 Look for the "CUDA Version" in the top right corner (e.g., 11.8, 12.1, etc.)
 
-## Step 2: Uninstall CPU PyTorch
+## Step 2: Install UV (if not already installed)
 
 ```bash
-pip uninstall torch torchvision torchaudio
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-## Step 3: Install CUDA-enabled PyTorch
+## Step 3: Setup Virtual Environment
+
+```bash
+# Create venv
+uv venv
+
+# Activate
+source .venv/Scripts/activate  # Windows (bash)
+# OR
+source .venv/bin/activate  # macOS/Linux
+```
+
+## Step 4: Install CUDA-enabled PyTorch
 
 ### For CUDA 11.8:
 ```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
 
 ### For CUDA 12.1:
 ```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 
 ### For CUDA 12.4:
 ```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+```
+
+### Install other dependencies:
+```bash
+uv pip install -e .
 ```
 
 Visit https://pytorch.org/get-started/locally/ for other versions.
 
-## Step 4: Verify GPU is Working
+## Step 5: Verify GPU is Working
 
 ```bash
-python -c "import torch; print('CUDA Available:', torch.cuda.is_available()); print('GPU Name:', torch.cuda.get_device_name(0))"
+uv run python -c "import torch; print('CUDA Available:', torch.cuda.is_available()); print('GPU Name:', torch.cuda.get_device_name(0))"
+
+# OR use the check script
+uv run python check_gpu.py
 ```
 
 Should output:
@@ -75,7 +99,7 @@ If you run out of GPU memory during training:
 
 Simply run:
 ```bash
-python train.py
+uv run python train.py
 ```
 
 The script will automatically detect and use your GPU!

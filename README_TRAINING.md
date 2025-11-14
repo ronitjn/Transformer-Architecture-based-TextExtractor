@@ -17,19 +17,36 @@ TextExtractor/
 
 ## Installation
 
-1. Install PyTorch (visit https://pytorch.org for your system):
-```bash
-# Example for CPU
-pip install torch torchvision torchaudio
+This project uses **UV** for fast package management.
 
-# Example for CUDA 11.8
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+### 1. Install UV
+```bash
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-2. Install other dependencies:
+### 2. Setup Project
 ```bash
-pip install -r requirements_training.txt
+# Create virtual environment
+uv venv
+
+# Activate
+source .venv/Scripts/activate  # Windows (bash)
+# OR
+source .venv/bin/activate  # macOS/Linux
+
+# Install for CPU
+uv pip install -e .
+
+# OR Install for GPU (CUDA 12.4)
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+uv pip install -e .
 ```
+
+See [UV Setup Guide](README_UV_SETUP.md) for details.
 
 ## Model Architecture
 
@@ -56,7 +73,7 @@ The implementation follows the "Attention Is All You Need" paper:
 ### Basic Training
 
 ```bash
-python train.py
+uv run python train.py
 ```
 
 ### Configuration
@@ -106,10 +123,10 @@ tensorboard --logdir logs
 
 ```bash
 # Basic generation
-python generate.py --prompt "The boy"
+uv run python generate.py --prompt "The boy"
 
 # Custom parameters
-python generate.py \
+uv run python generate.py \
     --checkpoint checkpoints/best.pt \
     --prompt "Once upon a time" \
     --max_length 500 \
